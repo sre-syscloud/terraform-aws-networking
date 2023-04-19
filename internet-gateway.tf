@@ -1,7 +1,8 @@
 resource "aws_internet_gateway" "ig" {
-  vpc_id = aws_vpc.vpc.id
-  tags = {
-    Name        = "${var.Environment}-igw"
-    Environment = "${var.Environment}"
+  count   = var.create_internet_gateway ? 1 : 0
+  vpc_id  = local.vpc_id
+  tags    = {
+    Name  = var.internet_gateway_name
+    Iaac  = "terraform" 
   }
 }
