@@ -347,13 +347,6 @@ variable "peering_connection" {
   description = "Map of variables to define a peering connection values"
   default     = {}
 }
-
-variable "different_account_peering_connection" {
-  type        = bool
-  description = "Enter the true to have peering connection for different account"
-  default     = true
-}
-
 variable "vpc_endpoint_details" {
   type = map(object({
     attach_endpoint_policies = bool

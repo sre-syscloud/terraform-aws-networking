@@ -1,8 +1,9 @@
 locals {
-  nat_eip_id = var.create_nat_eip ? aws_eip.nat_eip[0].id : data.aws_eip.nat_eip_data.id
+  nat_eip_id = var.create_nat_eip ? aws_eip.nat_eip[0].id : (var.create_nat_gateway ? data.aws_eip.nat_eip_data[0].id : null)
 }
 
 data "aws_eip" "nat_eip_data" {
+  count = var.create_nat_gateway ? 1 : 0
   tags = {
     Name = var.nat_eip_name
   }
