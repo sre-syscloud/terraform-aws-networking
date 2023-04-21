@@ -60,6 +60,7 @@ data "aws_vpn_gateway" "private_vpn_gateway" {
   tags = {
     Name = each.value["vpn_gateway_name"]
   }
+  depends_on = [aws_vpc_endpoint.vpc_endpoint]
 }
 
 resource "aws_route_table" "private_route_table" {

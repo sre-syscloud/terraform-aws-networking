@@ -67,6 +67,7 @@ resource "aws_route_table" "public_route_table" {
     Name        = each.value["route_table_name"]
     Iaac        = "terraform"
   }
+  depends_on = [aws_vpc_endpoint.vpc_endpoint]
 }
 
 resource "aws_route_table_association" "public_rt_association" {

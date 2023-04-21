@@ -16,7 +16,7 @@ locals {
     for ep_key,ep_value in var.vpc_endpoint_details : [
       for rt_name in ep_value["route_table_names"] : {
         route_table_name = rt_name
-        index = index(local.ep_keys,ep_key)
+        endpoint_key = ep_key
       }
     ]
   ])
@@ -24,7 +24,7 @@ locals {
     for ep_key,ep_value in var.vpc_endpoint_details : [
       for sn_name in ep_value["subnet_names"] : {
         subnet_name = sn_name
-        index = index(local.ep_keys,ep_key)
+        endpoint_key = ep_key
       }
     ]
   ])
@@ -32,7 +32,7 @@ locals {
     for ep_key,ep_value in var.vpc_endpoint_details : [
       for sg_name in ep_value["security_group_names"] : {
         security_group_name = sg_name
-        index = index(local.ep_keys,ep_key)
+        endpoint_key = ep_key
       }
     ]
   ])
@@ -76,18 +76,18 @@ resource "aws_vpc_endpoint" "vpc_endpoint" {
 
 resource "aws_vpc_endpoint_route_table_association" "rt_association" {
   for_each          = local.rt_association
-  vpc_endpoint_id   = aws_vpc_endpoint.vpc_endpoint[each.value.index].id
+  vpc_endpoint_id   = aws_vpc_endpoint.vpc_endpoint[each.value.endpoint_key].id
   route_table_id    = data.aws_route_table.route_table_id[each.key].id
 } 
 
 resource "aws_vpc_endpoint_subnet_association" "sn_association" {
   for_each          = local.sn_association
-  vpc_endpoint_id   = aws_vpc_endpoint.vpc_endpoint[each.value.index].id
+  vpc_endpoint_id   = aws_vpc_endpoint.vpc_endpoint[each.value.endpoint_key].id
   subnet_id         = data.aws_subnet.subnet_id[each.key].id
 }
 
 resource "aws_vpc_endpoint_security_group_association" "sg_association" {
   for_each          = local.sg_association
-  vpc_endpoint_id   = aws_vpc_endpoint.vpc_endpoint[each.value.index].id
+  vpc_endpoint_id   = aws_vpc_endpoint.vpc_endpoint[each.value.endpoint_key].id
   security_group_id = data.aws_security_groups.security_group_id[each.key].id
 }
