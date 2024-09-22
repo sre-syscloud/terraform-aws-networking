@@ -17,7 +17,7 @@ locals {
         }
       ]
     ])
-    public_peering_routes = { for peer in local.public_peering_route_list : peer.peering_connection_name => peer}
+    public_peering_routes = { for peer in local.public_peering_route_list : "${peer.peering_connection_name}-${peer.key}" => peer}
     public_vpn_gateway_list = flatten([
       for rt_key,rt_value in var.public_route_table_details : [
         for gateway in rt_value["vpn_gateway_names"] : {
@@ -58,6 +58,7 @@ data "aws_vpn_gateway" "public_vpn_gateway" {
   tags = {
     Name = each.value["vpn_gateway_name"]
   }
+  depends_on = [aws_vpc_endpoint.vpc_endpoint]
 }
 
 resource "aws_route_table" "public_route_table" {
@@ -65,9 +66,8 @@ resource "aws_route_table" "public_route_table" {
   vpc_id    = local.vpc_id
   tags = {
     Name        = each.value["route_table_name"]
-    Iaac        = "terraform"
+    Iaac        = "Terraform"
   }
-  depends_on = [aws_vpc_endpoint.vpc_endpoint]
 }
 
 resource "aws_route_table_association" "public_rt_association" {

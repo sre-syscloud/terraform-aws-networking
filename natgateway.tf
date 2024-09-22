@@ -20,7 +20,7 @@ resource "aws_nat_gateway" "nat" {
   depends_on    = [aws_internet_gateway.ig,aws_subnet.public_subnet]
   tags = {
     Name        = var.nat_gateway_name
-    Iaac        = "terraform"
+    Iaac        = "Terraform"
   }
 }
 

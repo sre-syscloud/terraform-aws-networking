@@ -29,6 +29,7 @@ variable "public_subnet_details" {
     cidr = string
     availability_zone = string
     name = string
+    custom_tags = map(string)
   }))
   description = "The list of CIDR blocks, availability zones, subnet names for the public subnets."
   default = {
@@ -36,6 +37,9 @@ variable "public_subnet_details" {
       cidr = "10.90.1.0/24"
       availability_zone = "us-east-1b"
       name = "staging-public-subnet-1"
+      custom_tags = {
+        "workload" = "All"
+      }
     }
   }
 }
@@ -45,6 +49,7 @@ variable "private_subnet_details" {
     cidr = string
     availability_zone = string
     name = string
+    custom_tags = map(string)
   }))
   description = "The list of CIDR blocks, availability zones, subnet names for the private subnets."
   default = {
@@ -52,6 +57,9 @@ variable "private_subnet_details" {
       cidr = "10.90.2.0/24"
       availability_zone = "us-east-1b"
       name = "staging-private-subnet-1"
+      custom_tags = {
+        "workload" = "All"
+      }
     }
   }
 }
@@ -347,6 +355,7 @@ variable "peering_connection" {
   description = "Map of variables to define a peering connection values"
   default     = {}
 }
+
 variable "vpc_endpoint_details" {
   type = map(object({
     attach_endpoint_policies = bool
@@ -377,5 +386,18 @@ variable "vpc_endpoint_details" {
       security_group_names = ["sys-private-sg"]
     }
   }
+}
+
+variable "sg_with_sg_rule" {
+  type = map(object({
+    rule_type = string
+    from_port = number
+    to_port   = number
+    protocol  = string
+    description = string
+    security_group_name = string
+    source_security_group_name = string
+  }))
+  default = {}
 }
 

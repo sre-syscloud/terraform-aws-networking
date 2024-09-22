@@ -5,7 +5,7 @@ resource "aws_security_group" "private-sg" {
     vpc_id      = local.vpc_id
     tags                    = {
         Name = var.private_security_group_details[count.index].name
-        Iaac = "terraform" 
+        Iaac = "Terraform" 
     }
     dynamic "ingress" {
         for_each = var.private_security_group_details[count.index].private_all_ingress_rules

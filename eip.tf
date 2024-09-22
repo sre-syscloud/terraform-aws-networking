@@ -18,7 +18,7 @@ resource "aws_eip" "nat_eip" {
   associate_with_private_ip = var.nat_eip_private_ip
   tags  = {
     Name = var.nat_eip_name
-    Iaac = "terraform"
+    Iaac = "Terraform"
   }
   depends_on = [aws_internet_gateway.ig]
 }
@@ -30,7 +30,7 @@ resource "aws_eip" "eip" {
   instance = each.value["eip_instance_id"]
   tags  = {
     Name = each.value["eip_name"]
-    Iaac = "terraform"
+    Iaac = "Terraform"
   }
   depends_on = [aws_internet_gateway.ig]
 }

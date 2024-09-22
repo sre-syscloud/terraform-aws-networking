@@ -44,7 +44,7 @@ resource "aws_network_acl" "network_acl" {
     }
     tags = {
         Name = each.value["nacl_name"]
-        Iaac = "terraform"
+        Iaac = "Terraform"
     }
 }
 

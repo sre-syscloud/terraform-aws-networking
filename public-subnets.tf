@@ -4,8 +4,8 @@ resource "aws_subnet" "public_subnet" {
   cidr_block              = each.value["cidr"]
   availability_zone       = each.value["availability_zone"]
   map_public_ip_on_launch = true
-  tags = {
+  tags = merge(each.value["custom_tags"],{
     Name        = each.value["name"]
-    Iaac        = "terraform"
-  }
+    Iaac        = "Terraform"
+  })
 }

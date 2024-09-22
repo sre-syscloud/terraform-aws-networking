@@ -6,6 +6,6 @@ resource "aws_vpc_peering_connection" "peering" {
   peer_region   = each.value["peer_region"]
   tags = {
     Name = each.value["peering_name"]
-    Iaac = "terraform"
+    Iaac = "Terraform"
   }
 }

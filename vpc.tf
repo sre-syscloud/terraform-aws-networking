@@ -17,6 +17,6 @@ resource "aws_vpc" "vpc" {
   enable_dns_support   = var.vpc_details["enable_dns_support"]
   tags = {
     Name        = var.vpc_details["vpc_name"]
-    Iaac        = "terraform"
+    Iaac        = "Terraform"
   }
 }
